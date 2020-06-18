@@ -11,7 +11,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const memberArr = [];
-var id = 0;
 
 genEmployee = () => {
   inquirer
@@ -52,9 +51,10 @@ genEmployee = () => {
       },
     ])
     .then((res) => {
+      var id = 0;
       if (res.chooseMember === "Engineer") {
         memberArr.push(
-          new Engineer(res.memberName, res.id, res.memberEmail, res.memGithub)
+          new Engineer(res.memberName, id, res.memberEmail, res.memGithub)
         );
         id++;
       } else if (res.chooseMember === "Intern") {
@@ -67,6 +67,7 @@ genEmployee = () => {
           new Manager(res.memberName, res.id, res.memberEmail, res.officeNumber)
         );
       }
+      console.log(res);
       inquirer
         .prompt({
           name: "addMember",
