@@ -11,6 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const memberArr = [];
+var id = 0;
 
 genEmployee = () => {
   inquirer
@@ -51,7 +52,7 @@ genEmployee = () => {
       },
     ])
     .then((res) => {
-      var id = 0;
+      // var id = 0;
       if (res.chooseMember === "Engineer") {
         memberArr.push(
           new Engineer(res.memberName, id, res.memberEmail, res.memGithub)
@@ -59,20 +60,21 @@ genEmployee = () => {
         id++;
       } else if (res.chooseMember === "Intern") {
         memberArr.push(
-          new Intern(res.memberName, res.id, res.memberEmail, res.memSchool)
+          new Intern(res.memberName, id, res.memberEmail, res.memSchool)
         );
         id++;
-      } else {
+      } else if (res.chooseMember === "Manager") {
         memberArr.push(
-          new Manager(res.memberName, res.id, res.memberEmail, res.officeNumber)
+          new Manager(res.memberName, id, res.memberEmail, res.officeNumber)
         );
+        id++;
       }
       console.log(res);
       inquirer
         .prompt({
           name: "addMember",
           type: "confirm",
-          message: "Do you want to add another teammate?",
+          message: "\nDo you want to add another teammate?",
         })
         .then((res) => {
           if (res.addMember) {
